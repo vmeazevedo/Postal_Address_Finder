@@ -11,15 +11,15 @@ def verifyJson(response: str):
         if response['erro'] == True:
             return False
         return True
-    except:
-        pass
+    except KeyError: ## True = Sem erros no json | False = Json com problema
+        return True
 
 def cep():
     cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
-    responde = requests.get('https://viacep.com.br/ws/' + cep_int.strip() + '/json/')
+    responde = requests.get(f'https://viacep.com.br/ws/{cep_int.strip()}/json/')
     # Verifica se a requisiçao HTTP está disponível.
     if responde.status_code != 200 or verifyJson(responde.json()) == False:
-        print('Não foi possível acessar o CEP por favor verifique seu número e digite novamente.')
+        print('\033[31mNão foi possível acessar o CEP por favor verifique seu número e digite novamente.\033[0;0m')
     else:
         # Armazena o dicionario em uma variável
         dados_cep = responde.json()
@@ -27,9 +27,17 @@ def cep():
         dados_local = responde.json()
         dados_uf = responde.json()
         # Exibe a chave dentro do dicionário.
-        print(f"Rua: {dados_cep['logradouro']}, {dados_bairro['bairro']}, {dados_local['localidade']}, {dados_local['uf']}.")
-        
-cep()
+
+        print(f"""
+            =========================================
+           | \x1b[1;34mCEP: {cep_int}\x1b[0m,        
+           | Rua: {dados_cep['logradouro']},        
+           | Bairro: {dados_bairro['bairro']},       
+           | Cidade: {dados_local['localidade']},    
+           | UF: {dados_local['uf']}                 
+           ==========================================
+           """)
+cep() 
 
 valid_cep = False
 while valid_cep == False:   
