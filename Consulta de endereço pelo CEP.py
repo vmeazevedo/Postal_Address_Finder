@@ -3,7 +3,12 @@
 #Twitter: twitter.com/vmeazevedo
 
 import requests
-print('\nBem-vindo ao sistema de consulta de CEP.')
+import argparse, sys
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--cep", help="entre com um cep válido")
+args = parser.parse_args()
 
 
 def verifyJson(response: str):
@@ -15,7 +20,11 @@ def verifyJson(response: str):
         return True
 
 def cep():
-    cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
+    if args.cep:
+        cep_int = args.cep
+    else:
+        print('\033[31mBem-vindo ao sistema de consulta de CEP.\033[0;0m')
+        cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
     responde = requests.get(f'https://viacep.com.br/ws/{cep_int.strip()}/json/')
     # Verifica se a requisiçao HTTP está disponível.
     if responde.status_code != 200 or verifyJson(responde.json()) == False:
@@ -30,7 +39,7 @@ def cep():
 
         print(f"""
             =========================================
-           | \x1b[1;34mCEP: {cep_int}\x1b[0m,        
+           | \x1b[1;34mCEP: {cep_int}\x1b[0m     
            | Rua: {dados_cep['logradouro']},        
            | Bairro: {dados_bairro['bairro']},       
            | Cidade: {dados_local['localidade']},    
@@ -40,8 +49,11 @@ def cep():
 cep() 
 
 valid_cep = False
-while valid_cep == False:   
-    again = input('\nDeseja realizar mais uma busca? S ou N: ').lower()
+while valid_cep == False:
+    if args.cep:
+        sys.exit()
+    else:
+        again = input('\nDeseja realizar mais uma busca? S ou N: ').lower()
     if again == 's':
         cep()
     else:
