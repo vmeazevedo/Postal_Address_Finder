@@ -2,15 +2,13 @@
 #Instagram: instagram.com/v.mazevedo
 #Twitter: twitter.com/vmeazevedo
 
-import requests, json
-
+import requests
 print('\nBem-vindo ao sistema de consulta de CEP.')
 
 
 def verifyJson(response: str):
     try:
-        data = json.loads(response.text)
-        if data['erro'] == True:
+        if response['erro'] == True:
             return False
         return True
     except:
@@ -20,7 +18,7 @@ def cep():
     cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
     responde = requests.get('https://viacep.com.br/ws/' + cep_int.strip() + '/json/')
     # Verifica se a requisiçao HTTP está disponível.
-    if responde.status_code != 200 or verifyJson(responde) == False:
+    if responde.status_code != 200 or verifyJson(responde.json()) == False:
         print('Não foi possível acessar o CEP por favor verifique seu número e digite novamente.')
     else:
         # Armazena o dicionario em uma variável
@@ -40,4 +38,4 @@ while valid_cep == False:
         cep()
     else:
         valid_cep = True
-        print('Até logo!') 
+        print('Até logo!')
