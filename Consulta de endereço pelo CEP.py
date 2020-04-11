@@ -30,7 +30,7 @@ def cep():
 
         print(f"""
             =========================================
-           | \x1b[1;34mCEP: {cep_int}\x1b[0m,        
+           | CEP: {cep_int},        
            | Rua: {dados_cep['logradouro']},        
            | Bairro: {dados_bairro['bairro']},       
            | Cidade: {dados_local['localidade']},    
