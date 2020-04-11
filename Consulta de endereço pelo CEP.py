@@ -20,12 +20,12 @@ def cep():
     if args.cep:
         cep_int = args.cep
     else:
-        print('\033[31mBem-vindo ao sistema de consulta de CEP.\033[0;0m')
+        print('Bem-vindo ao sistema de consulta de CEP.\033')
         cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
     responde = requests.get(f'https://viacep.com.br/ws/{cep_int.strip()}/json/')
     # Verifica se a requisiçao HTTP está disponível.
     if responde.status_code != 200 or verifyJson(responde.json()) == False:
-        print('\033[31mNão foi possível acessar o CEP por favor verifique seu número e digite novamente.\033[0;0m')
+        print('Não foi possível acessar o CEP por favor verifique seu número e digite novamente.')
     else:
         # Armazena o dicionario em uma variável
         dados_cep = responde.json()
