@@ -39,7 +39,7 @@ def cep():
 
         print(f"""
             =========================================
-           | CEP: {cep_int}
+           | CEP: {cep_int},
            | Rua: {dados_cep['logradouro']},        
            | Bairro: {dados_bairro['bairro']},       
            | Cidade: {dados_local['localidade']},    
