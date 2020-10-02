@@ -16,31 +16,40 @@ def verifyJson(response: str):
 
 def cep():
     cep_int = input('Por favor, digite o CEP que você gostaria de procurar na base (ex: 00000000): ')
-    responde = requests.get(f'https://viacep.com.br/ws/{cep_int.strip()}/json/')
-    # Verifica se a requisiçao HTTP está disponível.
-    if responde.status_code != 200 or verifyJson(responde.json()) == False:
-        print('\033[31mNão foi possível acessar o CEP por favor verifique seu número e digite novamente.\033[0;0m')
+    # Validação da entrada
+    if cep_int.isnumeric() == False:
+        print('Somente caracteres numéricos são permitidos! digite novamente.')
+        quit()
     else:
-        # Armazena o dicionario em uma variável
-        dados_cep = responde.json()
-        dados_bairro = responde.json()
-        dados_local = responde.json()
-        dados_uf = responde.json()
-        # Exibe a chave dentro do dicionário.
+        if len(cep_int) != 8:
+            print('Numeros de caracteres inválido! é válido 8 caracteres numéricos, digite novamente.')
+            quit()
 
-        print(f"""
-            =========================================
-           | CEP: {cep_int},        
-           | Rua: {dados_cep['logradouro']},        
-           | Bairro: {dados_bairro['bairro']},       
-           | Cidade: {dados_local['localidade']},    
-           | UF: {dados_local['uf']}                 
-           ==========================================
-           """)
-cep() 
+        responde = requests.get(f'https://viacep.com.br/ws/{cep_int.strip()}/json/')
+        # Verifica se a requisiçao HTTP está disponível.
+        if responde.status_code != 200 or verifyJson(responde.json()) == False:
+            print('\033[31mNão foi possível acessar o CEP por favor verifique seu número e digite novamente.\033[0;0m')
+        else:
+            # Armazena o dicionario em uma variável
+            dados_cep = responde.json()
+            dados_bairro = responde.json()
+            dados_local = responde.json()
+            dados_uf = responde.json()
+            # Exibe a chave dentro do dicionário.
+
+            print(f"""
+                =========================================
+            | CEP: {cep_int},
+            | Rua: {dados_cep['logradouro']},
+            | Bairro: {dados_bairro['bairro']},
+            | Cidade: {dados_local['localidade']},
+            | UF: {dados_local['uf']}
+            ==========================================
+            """)
+cep()
 
 valid_cep = False
-while valid_cep == False:   
+while valid_cep == False:
     again = input('\nDeseja realizar mais uma busca? S ou N: ').lower()
     if again == 's':
         cep()
