@@ -22,19 +22,16 @@ def cep():
         print('\033[31mNão foi possível acessar o CEP por favor verifique seu número e digite novamente.\033[0;0m')
     else:
         # Armazena o dicionario em uma variável
-        dados_cep = responde.json()
-        dados_bairro = responde.json()
-        dados_local = responde.json()
-        dados_uf = responde.json()
+        cep_info = responde.json()
         # Exibe a chave dentro do dicionário.
 
         print(f"""
             =========================================
            | CEP: {cep_int},        
-           | Rua: {dados_cep['logradouro']},        
-           | Bairro: {dados_bairro['bairro']},       
-           | Cidade: {dados_local['localidade']},    
-           | UF: {dados_local['uf']}                 
+           | Rua: {cep_info.get('logradouro', 'Não encontrado')},        
+           | Bairro: {cep_info.get('bairro', 'Não encontrado')},       
+           | Cidade: {cep_info.get('localidade', 'Não encontrado')},    
+           | UF: {cep_info.get('uf', 'Não encontrado')}                 
            ==========================================
            """)
 cep() 
