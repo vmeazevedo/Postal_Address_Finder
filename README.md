@@ -1,14 +1,14 @@
 ## Localizador de endereço por CEP.
 
 ## Requerimentos
-* python 
+* Python3 
 * pip 
 
 ## Como rodar o programa
 
 ```bash
 pip install -r requirements.txt
-python Consulta\ de\ endereço\ pelo\ CEP.py
+python main.py
 ```
 
 A aplicação realiza uma busca através da API da Viacep em uma base de dados e retorna as informações de rua, bairro, cidade e estado através do CEP fornecido.
@@ -23,14 +23,14 @@ A aplicação realiza uma busca através da API da Viacep em uma base de dados e
 The application performs a search through the Viacep API in a database and returns street, neighborhood, city and state information via the provided zip code.
 
 ## Requirements
-* python 
+* Python3 
 * pip 
 
 ## How to run
 
 ```bash
 pip install -r requirements.txt
-python Consulta\ de\ endereço\ pelo\ CEP.py
+python main.py
 ```
 
 ## Example of code operation:
